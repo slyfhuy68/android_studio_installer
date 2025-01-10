@@ -9,7 +9,7 @@
 下载地址：[Releases](https://github.com/slyfhuy68/android_studio_installer/releases)
 ## Gradle安装失败
 解决方法：在[Gradle Releases](https://github.com/gradle/gradle-distributions/releases)手动下载<br>
-位置:`%USERPROFILE%\gradle-8.9-bin\.gradle\wrapper\dists\`
+位置:`%USERPROFILE%\.gradle\wrapper\dists\`
 ## 汉化
 Android Studio 是基于IntelliJ IDEA的,因此IDEA的汉化包是可以直接用到Android Studio上.<br>
 1.[语言包](https://plugins.jetbrains.com/plugin/13710-chinese-simplified-language-pack----/versions)Compatibility Range是支持版本,下载后解压出lib\zh.XXX.XX.jar <br>
