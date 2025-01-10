@@ -15,3 +15,4 @@ Android Studio 是基于IntelliJ IDEA的,因此IDEA的汉化包是可以直接�
 2.点击左侧的Plugins,点击Installed旁边的设置图标,选择InstallPlugin from Disk <br>
 4.找到刚才解压的zh.XXX.XX.jar 安装 <br>
 5.在Customize中切换语言，重启android studio<br>
+## Your Android SDK is missing, out of date or corrupted.
