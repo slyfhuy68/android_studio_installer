@@ -2,7 +2,11 @@ name: Android Studio Docs Download
 
 on:
   workflow_dispatch:
-
+    inputs:
+      docs_url:
+        description: 'docsurl'
+        required: true
+        default: 'https://developer.android.google.cn/studio?hl=zh-cn'
 
 
 jobs:
@@ -15,7 +19,7 @@ jobs:
 
     - name: Download installers
       run: |
-        curl -o webpage.html "https://developer.android.google.cn/tools/releases/platforms?hl=zh-cn"
+        curl -o webpage.html "${{ github.event.inputs.docs_url }}"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
