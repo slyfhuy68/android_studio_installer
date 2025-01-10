@@ -7,6 +7,10 @@ on:
         description: 'docsurl'
         required: true
         default: 'https://developer.android.google.cn/studio?hl=zh-cn'
+      name:
+        description: 'name'
+        required: true
+        default: 'webpage.html'
 
 
 jobs:
@@ -19,13 +23,13 @@ jobs:
 
     - name: Download installers
       run: |
-        curl -o webpage.html -L "${{ github.event.inputs.docs_url }}"
+        curl -o ${{ github.event.inputs.name }} -L "${{ github.event.inputs.docs_url }}"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: webpage.html
-        path: webpage.html
+        name: ${{ github.event.inputs.name }}
+        path: ${{ github.event.inputs.name }}
         retention-days: 1
 
 
