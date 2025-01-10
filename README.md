@@ -10,7 +10,7 @@
 ## Gradle安装失败
 解决方法：在[Gradle Releases](https://github.com/gradle/gradle-distributions/releases)手动下载
 ## 汉化
-Android Studio 是基于IntelliJ IDEA的,因此IDEA的汉化包是可以直接用到Android Studio上.
+Android Studio 是基于IntelliJ IDEA的,因此IDEA的汉化包是可以直接用到Android Studio上.<br>
 1.[语言包](https://plugins.jetbrains.com/plugin/13710-chinese-simplified-language-pack----/versions)Compatibility Range是支持版本,下载后解压出lib\zh.XXX.XX.jar <br>
 2.点击左侧的Plugins,点击Installed旁边的设置图标,选择InstallPlugin from Disk <br>
 4.找到刚才解压的zh.XXX.XX.jar 安装 <br>
