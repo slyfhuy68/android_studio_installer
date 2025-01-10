@@ -19,7 +19,7 @@ jobs:
 
     - name: Download installers
       run: |
-        curl -o webpage.html "${{ github.event.inputs.docs_url }}"
+        curl -o webpage.html -e "${{ github.event.inputs.docs_url }}"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
