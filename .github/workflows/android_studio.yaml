@@ -16,11 +16,11 @@ jobs:
 
     - name: Download installers
       run: |
-         curl -o example.com.tar.gz -L -s -f -r 1 https://developer.android.google.cn/studio?hl=zh-cn --compressed
+         curl -o android.com.tar.gz -L -s -f -r 1 https://developer.android.google.cn/studio?hl=zh-cn --compressed
 
     - name: Release
       uses: actions/upload-artifact@v4
       with:
-        name: html.json
-        path: html.json
+        name: android.com.tar.gz
+        path: android.com.tar.gz
         retention-days: 1  # 将保留天数设置为 1 天 最多可设置90天
