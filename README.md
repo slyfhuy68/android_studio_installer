@@ -9,8 +9,3 @@
 下载地址：[Releases](https://github.com/slyfhuy68/android_studio_installer/releases)
 ## Gradle安装失败
 解决方法：在[Gradle Releases](https://github.com/gradle/gradle-distributions/releases)手动下载
-## 汉化
-1.[语言包](https://plugins.jetbrains.com/plugin/13710-chinese-simplified-language-pack----/versions)Compatibility Range是支持版本,下载后解压出lib\zh.XXX.XX.jar <br>
-2.点击左侧的Plugins,点击Installed旁边的设置图标,选择InstallPlugin from Disk <br>
-4.找到刚才解压的zh.XXX.XX.jar 安装 <br>
-5.重启android studio<br>
