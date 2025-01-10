@@ -1,0 +1,27 @@
+name: Android Studio Docs Download
+
+on:
+  workflow_dispatch:
+
+
+
+jobs:
+  download_installer:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Download installers
+      run: |
+        curl -o webpage.html "https://developer.android.google.cn/tools/releases/platforms?hl=zh-cn"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: webpage.html
+        path: webpage.html
+        retention-days: 1
+
+
