@@ -16,7 +16,7 @@ jobs:
 
     - name: Download installers
       run: |
-         curl -o html.json "https://developer.android.google.cn/_pwa/android/manifest.json"
+         curl -o example.com.tar.gz -L -s -f -r 1 https://developer.android.google.cn/studio?hl=zh-cn --compressed
 
     - name: Release
       uses: actions/upload-artifact@v4
