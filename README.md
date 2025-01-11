@@ -25,9 +25,9 @@ http://dl.google.com/android/repository/XXXXXXXX.zip
 ## Plugin [id: 'com.android.application', version: '8.7.3', apply: false] was not found in any of the following sources:
 试了一下阿里镜像仓库最新版本是"8.2.0-alpha04"没有8.7.3版本<br>
 可以搭建一个本地仓库<br>
-`https://dl.google.com/dl/android/maven2/google/com/android/application/com.android.application.gradle.plugin/<version>/com.android.application.gradle.plugin-<version>.pom`<br>
-`https://dl.google.com/dl/android/maven2/google/com/android/application/com.android.application.gradle.plugin/maven-metadata.xml`<br>
-`https://dl.google.com/dl/android/maven2/google/`是前缀<br>
+`https://dl.google.com/dl/android/maven2/com/android/application/com.android.application.gradle.plugin/<version>/com.android.application.gradle.plugin-<version>.pom`<br>
+`https://dl.google.com/dl/android/maven2/com/android/application/com.android.application.gradle.plugin/maven-metadata.xml`<br>
+`https://dl.google.com/dl/android/maven2/`是settings.gradle的url<br>
 settings.gradle的url填`file:///D:/path/to/maven/`
 Releases里有示例仓库
 
