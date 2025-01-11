@@ -22,7 +22,8 @@ android repository：https://dl.google.com/android/repository/repository2-3.xml<
 android repository v2：https://dl.google.com/android/repository/repository2-2.xml<br>
 http://dl-ssl.google.com/android/repository/XXXXXXXX.zip
 http://dl.google.com/android/repository/XXXXXXXX.zip
-## Plugin [id: 'com.android.application', version: '8.7.3', apply: false] was not found in any of the following sources:
+## Plugin [id: 'com.android.application', version: '8.7.3', apply: false] was not found in any of the following sources:\Could not find com.android.tools.build:gradle:8.7.3.
+
 试了一下阿里镜像仓库最新版本是"8.2.0-alpha04"没有8.7.3版本<br>
 可以搭建一个本地仓库<br><br>
 `https://dl.google.com/dl/android/maven2/com/android/application/com.android.application.gradle.plugin/<version>/com.android.application.gradle.plugin-<version>.pom`<br><br>
