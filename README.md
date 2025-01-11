@@ -31,4 +31,6 @@ http://dl.google.com/android/repository/XXXXXXXX.zip
 `https://dl.google.com/dl/android/maven2/`是settings.gradle的url<br>
 settings.gradle的url填`file:///D:/path/to/maven/`
 Releases里有示例仓库
+把google()注释掉，不然还会从谷歌下载
+阿里镜像别删，还有其它的要在阿里镜像仓库下载
 
