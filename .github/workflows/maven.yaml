@@ -11,7 +11,7 @@ on:
         description: 'artifact'
         required: true
         default: 'com.android.application.gradle.plugin'
-      name:
+      version:
         description: 'version'
         required: true
         default: '8.7.3'
