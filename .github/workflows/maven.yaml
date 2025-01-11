@@ -1,0 +1,48 @@
+name: Android Studio Maven Download
+
+on:
+  workflow_dispatch:
+    inputs:
+      group:
+        description: 'group'
+        required: true
+        default: 'com/android/application'
+      artifact:
+        description: 'artifact'
+        required: true
+        default: 'com.android.application.gradle.plugin'
+      name:
+        description: 'version'
+        required: true
+        default: '8.7.3'
+
+
+jobs:
+  download_installer:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Download installers
+      run: |
+          mkdir maven
+          cd maven
+          mkdir -p ./${{ github.event.inputs.group }}/${{ github.event.inputs.artifact }}
+          cd ./${{ github.event.inputs.group }}/${{ github.event.inputs.artifact }}
+          curl -o maven-metadata.xml -L "https://dl.google.com/dl/android/maven2/${{ github.event.inputs.group }}/${{ github.event.inputs.artifact }}/maven-metadata.xml"
+          mkdir ${{ github.event.inputs.version }}
+          cd ./${{ github.event.inputs.version }}
+          curl -o ${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}.pom -L "https://dl.google.com/dl/android/maven2/${{ github.event.inputs.group }}/${{ github.event.inputs.artifact }}/${{ github.event.inputs.version }}/${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}.pom"
+          curl -o ${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}.jar -L "https://dl.google.com/dl/android/maven2/${{ github.event.inputs.group }}/${{ github.event.inputs.artifact }}/${{ github.event.inputs.version }}/${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}.jar"
+          # curl -o ${{ github.event.inputs.name }} -L "${{ github.event.inputs.docs_url }}"
+          cd $GITHUB_WORKSPACE
+          tar -cvf maven.tar ./maven/
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ github.event.inputs.name }}
+        path: ${{ github.event.inputs.name }}
+        retention-days: 1
