@@ -1,0 +1,28 @@
+name: Docker Image
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: '镜像名称'
+        required: true
+        type: string
+
+jobs:
+  save-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pull image
+        run: |
+          docker pull ${{ github.event.inputs.image }}
+
+      - name: Save image
+        run: |
+          docker save ${{ github.event.inputs.image }} -o image.tar
+
+      - name: Upload artifact as image.tar
+        uses: actions/upload-artifact@v4
+        with:
+          name: image-docker
+          path: image.tar
+          retention-days: 1
