@@ -87,4 +87,3 @@ dependencyResolutionManagement {
 rootProject.name = "My Application"//这里应该是app的名字
 include ':app'
 ```
-我是一名小学生，有问题欢迎提issues
