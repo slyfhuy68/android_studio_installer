@@ -15,19 +15,11 @@ jobs:
 
     - name: Download installers
       run: |
-        curl -o studio.html "https://developer.android.google.cn/studio?hl=zh-cn"
-        curl -o archive.html "https://developer.android.google.cn/studio/archive?hl=zh-cn"
-        curl -o emulator_archive.html "https://developer.android.google.cn/studio/emulator_archive?hl=zh-cn"
-        curl -o windows.zip -L "https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2024.2.1.12/android-studio-2024.2.1.12-windows.zip"
-        curl -o windows.exe -L "https://redirector.gvt1.com/edgedl/android/studio/install/2024.2.1.12/android-studio-2024.2.1.12-windows.exe"
+        curl -o android-studio-2025.2.2.8-windows.exe -L "https://redirector.gvt1.com/edgedl/android/studio/install/2025.2.2.8/android-studio-2025.2.2.8-windows.exe"
 
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          studio.html
-          archive.html
-          emulator_archive.html
-          windows.zip
-          windows.exe
-        tag_name: 2024.2.1.12
+          android-studio-2025.2.2.8-windows.exe
+        tag_name: 2025.2.2.8
