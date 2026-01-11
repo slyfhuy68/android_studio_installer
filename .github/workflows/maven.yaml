@@ -1,48 +1,92 @@
-name: Android Studio Maven Download
+name: Android Studio Maven Download (Recursive)
 
 on:
   workflow_dispatch:
     inputs:
       group:
-        description: 'group'
+        description: 'Group ID (e.g., com.android.application)'
         required: true
-        default: 'com/android/application'
+        default: 'com.android.application'
       artifact:
-        description: 'artifact'
+        description: 'Artifact ID (e.g., com.android.application.gradle.plugin)'
         required: true
         default: 'com.android.application.gradle.plugin'
       version:
-        description: 'version'
+        description: 'Version (e.g., 8.7.3)'
         required: true
         default: '8.7.3'
 
-
 jobs:
-  download_installer:
+  download-dependencies:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Download installers
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Create temporary pom.xml
       run: |
-          mkdir maven
-          cd maven
-          mkdir -p ./${{ github.event.inputs.group }}/${{ github.event.inputs.artifact }}
-          cd ./${{ github.event.inputs.group }}/${{ github.event.inputs.artifact }}
-          curl -o maven-metadata.xml -L "https://dl.google.com/dl/android/maven2/${{ github.event.inputs.group }}/${{ github.event.inputs.artifact }}/maven-metadata.xml"
-          mkdir ${{ github.event.inputs.version }}
-          cd ./${{ github.event.inputs.version }}
-          curl -o ${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}.pom -L "https://dl.google.com/dl/android/maven2/${{ github.event.inputs.group }}/${{ github.event.inputs.artifact }}/${{ github.event.inputs.version }}/${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}.pom"
-          curl -o ${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}.jar -L "https://dl.google.com/dl/android/maven2/${{ github.event.inputs.group }}/${{ github.event.inputs.artifact }}/${{ github.event.inputs.version }}/${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}.jar"
-          # curl -o ${{ github.event.inputs.name }} -L "${{ github.event.inputs.docs_url }}"
-          cd $GITHUB_WORKSPACE
-          tar -cvf ${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}.tar maven/
+        cat > pom.xml <<EOF
+        <?xml version="1.0" encoding="UTF-8"?>
+        <project xmlns="http://maven.apache.org/POM/4.0.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+            <modelVersion>4.0.0</modelVersion>
+            <groupId>offline.helper</groupId>
+            <artifactId>maven-offline-pack</artifactId>
+            <version>1.0</version>
+            <packaging>pom</packaging>
+
+            <dependencies>
+                <dependency>
+                    <groupId>${{ github.event.inputs.group }}</groupId>
+                    <artifactId>${{ github.event.inputs.artifact }}</artifactId>
+                    <version>${{ github.event.inputs.version }}</version>
+                </dependency>
+            </dependencies>
+
+            <repositories>
+                <repository>
+                    <id>google</id>
+                    <url>https://dl.google.com/dl/android/maven2/</url>
+                </repository>
+            </repositories>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>google</id>
+                    <url>https://dl.google.com/dl/android/maven2/</url>
+                </pluginRepository>
+            </pluginRepositories>
+        </project>
+        EOF
+
+    - name: Download all dependencies and plugins recursively
+      run: |
+        # This downloads everything needed to build this POM offline
+        mvn dependency:go-offline --batch-mode
+
+    - name: Package relevant part of local Maven repo
+      run: |
+        GROUP_PATH=$(echo "${{ github.event.inputs.group }}" | tr '.' '/')
+        REPO_ROOT="$HOME/.m2/repository"
+        TARGET_DIR="maven-repo"
+
+        mkdir -p "$TARGET_DIR/$GROUP_PATH"
+        cp -r "$REPO_ROOT/$GROUP_PATH"/. "$TARGET_DIR/$GROUP_PATH/"
+
+        tar -czf maven-offline-${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}.tar.gz \
+            -C "$TARGET_DIR" .
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name:  ${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}.tar
-        path:  ${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}.tar
+        name: maven-offline-${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}
+        path: maven-offline-${{ github.event.inputs.artifact }}-${{ github.event.inputs.version }}.tar.gz
         retention-days: 1
